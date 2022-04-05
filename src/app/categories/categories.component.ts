@@ -10,6 +10,8 @@ import { CategoriesService } from '../services/categories.service';
   styleUrls: ['./categories.component.css'],
 })
 export class CategoriesComponent implements OnInit {
+  id: string = '';
+  formStatus: 'Add' | 'Edit' = 'Add';
   categories$ = new Observable<{ id: string; data: Category }[]>();
 
   form = new FormGroup({
@@ -24,9 +26,22 @@ export class CategoriesComponent implements OnInit {
 
   addCategory() {
     const category: Category = { ...this.form.value };
-    this.categoriesService.addCategory(category);
 
+    if (this.formStatus === 'Add') {
+      this.categoriesService.addCategory(category);
+    } else {
+      console.log(category.category);
+      this.categoriesService.updateCategory(this.id, category.category);
+    }
+
+    this.formStatus = 'Add';
     this.form.reset();
+  }
+
+  editCategory(id: string, category: string) {
+    this.id = id;
+    this.form.controls['category'].setValue(category);
+    this.formStatus = 'Edit';
   }
 
   hasErrors(name: string) {

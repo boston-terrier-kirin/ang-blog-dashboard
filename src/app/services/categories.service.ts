@@ -47,4 +47,16 @@ export class CategoriesService {
         })
       );
   }
+
+  updateCategory(id: string, category: string) {
+    this.firestore
+      .collection('categories')
+      .doc(id)
+      .update({ category })
+      .then(() => {
+        this.toastrService.success(
+          `Category ${category} updated successfully.`
+        );
+      });
+  }
 }

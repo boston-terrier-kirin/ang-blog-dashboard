@@ -1,8 +1,12 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12 bg-secondary-theme p-5 shadow-effect">
-      <h3 class="text-center text-theme-primary">New Categories</h3>
-      <p class="text-center mb-5">You can add new categories here!</p>
+      <h3 class="text-center text-theme-primary">
+        {{ formStatus }} Categories
+      </h3>
+      <p class="text-center mb-5">
+        You can {{ formStatus }} new categories here!
+      </p>
       <form class="form-inline" [formGroup]="form" (ngSubmit)="addCategory()">
         <div class="col-md-10">
           <input
@@ -18,7 +22,7 @@
         </div>
         <div class="col-md-2">
           <button class="btn btn-block btn-info" [disabled]="form.invalid">
-            Add Category
+            {{ formStatus }} Category
           </button>
         </div>
       </form>
@@ -42,7 +46,14 @@
               <tr *ngFor="let category of categories; let i = index">
                 <td>{{ i + 1 }}</td>
                 <td>{{ category.data.category }}</td>
-                <td></td>
+                <td>
+                  <button
+                    class="btn btn-sm btn-warning"
+                    (click)="editCategory(category.id, category.data.category)"
+                  >
+                    Edit
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
