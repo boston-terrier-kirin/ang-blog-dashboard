@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { Category } from '../models/category';
 import { CategoriesService } from '../services/categories.service';
 
@@ -9,17 +10,23 @@ import { CategoriesService } from '../services/categories.service';
   styleUrls: ['./categories.component.css'],
 })
 export class CategoriesComponent implements OnInit {
+  categories$ = new Observable<{ id: string; data: Category }[]>();
+
   form = new FormGroup({
     category: new FormControl('', [Validators.required]),
   });
 
   constructor(private categoriesService: CategoriesService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.categories$ = this.categoriesService.loadCategory();
+  }
 
   addCategory() {
     const category: Category = { ...this.form.value };
     this.categoriesService.addCategory(category);
+
+    this.form.reset();
   }
 
   hasErrors(name: string) {
