@@ -44,6 +44,10 @@ export class CategoriesComponent implements OnInit {
     this.formStatus = 'Edit';
   }
 
+  deleteCategory(id: string, category: string) {
+    this.categoriesService.deleteCategory(id, category);
+  }
+
   hasErrors(name: string) {
     const { dirty, touched, errors } = this.form.controls[name];
     return dirty && touched && errors;

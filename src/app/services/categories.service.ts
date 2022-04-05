@@ -59,4 +59,16 @@ export class CategoriesService {
         );
       });
   }
+
+  deleteCategory(id: string, category: string) {
+    this.firestore
+      .collection('categories')
+      .doc(id)
+      .delete()
+      .then(() => {
+        this.toastrService.success(
+          `Category ${category} deleted successfully.`
+        );
+      });
+  }
 }
