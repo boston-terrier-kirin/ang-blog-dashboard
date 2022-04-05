@@ -3,21 +3,23 @@
     <div class="col-md-12 bg-secondary-theme p-5 shadow-effect">
       <h3 class="text-center text-theme-primary">New Categories</h3>
       <p class="text-center mb-5">You can add new categories here!</p>
-      <form
-        class="form-inline text-center"
-        [formGroup]="form"
-        (ngSubmit)="addCategory()"
-      >
+      <form class="form-inline" [formGroup]="form" (ngSubmit)="addCategory()">
         <div class="col-md-10">
           <input
             type="text"
             class="form-control w-100"
             placeholder="Add New Categories"
             formControlName="category"
+            [ngClass]="{ 'is-invalid': hasErrors('category') }"
           />
+          <div *ngIf="hasErrors('category')" class="mt-1 alert alert-danger">
+            {{ getErrors("category") }}
+          </div>
         </div>
         <div class="col-md-2">
-          <button class="btn btn-block btn-info">Add Category</button>
+          <button class="btn btn-block btn-info" disabled="form.invalid">
+            Add Category
+          </button>
         </div>
       </form>
     </div>

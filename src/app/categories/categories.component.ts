@@ -38,4 +38,20 @@ export class CategoriesComponent implements OnInit {
         console.log(err);
       });
   }
+
+  hasErrors(name: string) {
+    const { dirty, touched, errors } = this.form.controls[name];
+    return dirty && touched && errors;
+  }
+
+  getErrors(name: string) {
+    const { dirty, touched, errors } = this.form.controls[name];
+    if (dirty && touched && errors) {
+      if (errors['required']) {
+        return 'Value is required.';
+      }
+      return null;
+    }
+    return null;
+  }
 }
